@@ -1,0 +1,18 @@
+# Ignorar node_modules
+node_modules/
+
+# Ignorar arquivos de ambiente
+.env
+.env.local
+
+# Ignorar logs
+*.log
+
+# Ignorar arquivos de configuração local
+.DS_Store
+.vscode/
+.idea/
+
+# Ignorar arquivos compilados do TypeScript (se aplicável)
+dist/
+lib/
