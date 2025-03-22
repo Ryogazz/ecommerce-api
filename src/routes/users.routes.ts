@@ -1,13 +1,14 @@
 import express from 'express';
 import { UsersController } from '../controllers/users.controllers';
+import asyncHeadler from 'express-async-handler';
 
 
 export const usersRoutes = express.Router();
 
-usersRoutes.get("/users", UsersController.getAllUsers);
-usersRoutes.get("/users/:id", UsersController.getUserById);
-usersRoutes.post("/users", UsersController.createUser);
-usersRoutes.put("/users/:id", UsersController.updateUser);
-usersRoutes.delete("/users/:id", UsersController.deleteUser);
+usersRoutes.get("/users", asyncHeadler(UsersController.getAllUsers));
+usersRoutes.get("/users/:id", asyncHeadler(UsersController.getUserById));
+usersRoutes.post("/users", asyncHeadler(UsersController.createUser));
+usersRoutes.put("/users/:id", asyncHeadler(UsersController.updateUser));
+usersRoutes.delete("/users/:id", asyncHeadler(UsersController.deleteUser));
 
 
