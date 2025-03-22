@@ -16,3 +16,5 @@ node_modules/
 # Ignorar arquivos compilados do TypeScript (se aplicável)
 dist/
 lib/
+
+firebase-adminsdk.json
