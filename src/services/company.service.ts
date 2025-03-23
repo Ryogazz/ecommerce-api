@@ -1,13 +1,18 @@
-import { NotFoundError } from '../errors/not-found.erro';
-import { Company } from '../models/company.model';
-import { CompanyRepository } from '../repositories/company.repository';
+import { NotFoundError } from '../errors/not-found.erro.js';
+import { Company } from '../models/company.model.js';
+import { CompanyRepository } from '../repositories/company.repository.js';
+import { UploadFileService } from './upload-file.service.js';
 
 
 export class CompanyService {
 
   private companyRepository: CompanyRepository;
+  private uploadFileService: UploadFileService
   constructor() {
     this.companyRepository = new CompanyRepository();
+    this.uploadFileService = new UploadFileService(
+      "images/companies/"
+    );
   }
   async getAll(): Promise<Company[]> {
     return await this.companyRepository.getAll();
@@ -23,6 +28,8 @@ export class CompanyService {
   }
 
   async create(company: Company): Promise<void> {
+    const logomarcaUrl = await this.uploadFileService.upload(company.logomarca);
+    company.logomarca = logomarcaUrl;
     await this.companyRepository.create(company);
   }
 
