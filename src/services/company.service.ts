@@ -1,7 +1,7 @@
 import { NotFoundError } from '../errors/not-found.erro.js';
-import { ValidationError } from '../errors/validation.error.js';
 import { Company } from '../models/company.model.js';
 import { CompanyRepository } from '../repositories/company.repository.js';
+import { isStorageUrlValid } from '../utils/validation-utils.js';
 import { UploadFileService } from './upload-file.service.js';
 
 
@@ -37,9 +37,9 @@ export class CompanyService {
   async update(id: string, company: Company): Promise<void> {
     const _company = await this.getById(id);
 
-    if (!this.isValidUrl(company.logomarca)) {
+    if (!isStorageUrlValid(company.logomarca)) {
       _company.logomarca = await this.uploadFileService.upload(company.logomarca);
-    }
+  }
 
       _company.logomarca = company.logomarca,
       _company.cpfCnpj = company.cpfCnpj,
@@ -56,22 +56,5 @@ export class CompanyService {
     await this.companyRepository.update(_company);
   }
 
-   private isValidUrl(url: string): boolean {
-    if (!url || url.trim() === '') {
-      throw new ValidationError('URL não pode ser vazia');
-    }
-    try {
-        const urlObj = new URL(url);
-        if(urlObj.host !== "firebasestorage.googleapis.com") {
-          throw new ValidationError('URL de origem inválida');
-        }
-        return true;
-    } catch (error) {
-        if (error instanceof ValidationError) {
-            throw error;
-        }
-        return false;
-    }
-  }
 
 }

@@ -3,6 +3,7 @@ import { usersRoutes } from './users.routes.js';
 import { authRoutes } from './auth.routes.js';
 import { companyRoutes } from './companies.routes.js';
 import { categoryRoutes } from './category.routes.js';
+import { productRoutes } from './products.router.js';
 
 export const routes = (app: express.Express) => {
   app.use(express.json({ limit: '5mb' }));
@@ -10,4 +11,5 @@ export const routes = (app: express.Express) => {
   app.use(usersRoutes);
   app.use(companyRoutes);
   app.use(categoryRoutes);
+  app.use(productRoutes);
 }
