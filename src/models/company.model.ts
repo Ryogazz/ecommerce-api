@@ -32,7 +32,10 @@ export const newCompanySchema = {
 };
 
 export const updateCompanySchema = {
-  logomarca: Joi.string().allow(null),
+  logomarca: Joi.alternatives().try(
+    Joi.string().base64().required(), 
+    Joi.string().uri().required()
+   ),
   cpfCnpj: Joi.alternatives().try(
     Joi.string().length(11).required(),
     Joi.string().length(14).required()
