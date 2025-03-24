@@ -6,10 +6,12 @@ import { categoryRoutes } from './category.routes.js';
 import { paymentMethodsRoutes } from './payment-methods.routes.js';
 import { productRoutes } from './products.routes.js';
 import { orderRoutes } from './orders.routes.js';
+import { allowAnonymousUser } from '../middlewares/allow-anonymous-user.middleware.js';
 
 export const routes = (app: express.Express) => {
   app.use(express.json({ limit: '5mb' }));
   app.use(authRoutes);
+  app.use(allowAnonymousUser);
   app.use(usersRoutes);
   app.use(companyRoutes);
   app.use(categoryRoutes);

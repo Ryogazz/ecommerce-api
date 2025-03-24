@@ -8,3 +8,4 @@ export const authRoutes = Router();
 
 authRoutes.post("/auth/login", celebrate({[Segments.BODY]: authLoginSchema}), asyncHeadler(AuthController.login));
 authRoutes.post("/auth/recovery", celebrate({[Segments.BODY]: authRecoverySchema}), asyncHeadler(AuthController.recovery));
+authRoutes.post("/auth/signin", asyncHeadler(AuthController.signin));
