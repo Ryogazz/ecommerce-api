@@ -11,7 +11,7 @@ export class AuthService {
       return await getAuth().createUser({
         email: user.email,
         password: user.password,
-        displayName: user.name,
+        displayName: user.nome,
       });
     } catch (error) {
       if (error instanceof FirebaseAuthError && error.code === 'auth/email-already-exists') {
@@ -23,7 +23,7 @@ export class AuthService {
 
   update(id: string, user: User) {
     const props: UpdateRequest = {
-      displayName: user.name,
+      displayName: user.nome,
       email: user.email
     };
 

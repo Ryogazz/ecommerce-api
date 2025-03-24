@@ -13,12 +13,12 @@ export class UserService {
     this.authService = new AuthService();
   }
   async getAllUsers(): Promise<User[]> {
-    return await this.userRepository.getAllUsers();
+    return await this.userRepository.getAll();
 
   }
 
   async getUserById(userId: string): Promise<User> {
-    const user = await this.userRepository.getUserById(userId);
+    const user = await this.userRepository.getById(userId);
     if (!user) {
       throw new NotFoundError('Usuário não encontrado');
     }
@@ -28,20 +28,20 @@ export class UserService {
   async createUser(user: User): Promise<void> {
     const userRecord = await this.authService.create(user);
     user.id = userRecord.uid;
-    await this.userRepository.updateUser(user);
+    await this.userRepository.update(user);
   }
 
   async updateUser(userId: string, user: User): Promise<void> {
     const _user = await this.getUserById(userId);
     
-    _user.name = user.name;
+    _user.nome = user.nome;
     _user.email = user.email;
       await this.authService.update(userId, user);
-      await this.userRepository.updateUser(_user);
+      await this.userRepository.update(_user);
   }
 
   async deleteUser(userId: string): Promise<void> {
     await this.authService.deleteUser(userId);
-    return await this.userRepository.deleteUser(userId);
+    return await this.userRepository.delete(userId);
   }
 }

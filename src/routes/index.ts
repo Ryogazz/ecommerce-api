@@ -3,8 +3,9 @@ import { usersRoutes } from './users.routes.js';
 import { authRoutes } from './auth.routes.js';
 import { companyRoutes } from './companies.routes.js';
 import { categoryRoutes } from './category.routes.js';
-import { productRoutes } from './products.router.js';
-import { paymentMethodsRoutes } from './payment-methods.route.js';
+import { paymentMethodsRoutes } from './payment-methods.routes.js';
+import { productRoutes } from './products.routes.js';
+import { orderRoutes } from './orders.routes.js';
 
 export const routes = (app: express.Express) => {
   app.use(express.json({ limit: '5mb' }));
@@ -14,4 +15,5 @@ export const routes = (app: express.Express) => {
   app.use(categoryRoutes);
   app.use(productRoutes);
   app.use(paymentMethodsRoutes)
+  app.use(orderRoutes);
 }

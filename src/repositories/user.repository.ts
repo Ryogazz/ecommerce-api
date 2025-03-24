@@ -1,52 +1,35 @@
-import { CollectionReference, getFirestore } from 'firebase-admin/firestore';
-import { User } from '../models/user.model.js';
+import { CollectionReference, getFirestore } from "firebase-admin/firestore";
+import { User, userConverter } from "../models/user.model.js";
 
 export class UserRepository {
 
-  private collection: CollectionReference;
+    private collection: CollectionReference<User>;
 
-  constructor() {
-    this.collection = getFirestore().collection('users');
-  }
-  async getAllUsers(): Promise<User[]> {
-    const snapshot = await  this.collection.get();
-    const users = snapshot.docs.map(doc => {
-      return {
-        id: doc.id,
-        ...doc.data()
-      }
+    constructor() {
+        this.collection = getFirestore()
+            .collection("users")
+            .withConverter(userConverter);
     }
-    ) as User[];
-    return users;
-  }
 
-  async getUserById(userId: string): Promise<User | null> {
-    const doc = await this.collection.doc(userId).get();
-    if (doc.exists) {
-      return {
-        id: doc.id,
-        ...doc.data()
-      } as User;
+    async getAll(): Promise<User[]> {
+        const snapshot = await this.collection.get();
+        return snapshot.docs.map(doc => doc.data());
     }
-    else {
-      return null;
+
+    async getById(id: string): Promise<User | null> {
+        const doc = await this.collection.doc(id).get();
+        return doc.data() ?? null;
     }
-  }
 
-  async createUser(user: User): Promise<void> {
-    delete user.password;
-    await this.collection.add(user);
-  }
+    async save(user: User) {
+        await this.collection.add(user);
+    }
 
-  async updateUser(user: User): Promise<void> {
-    const docRef = this.collection.doc(user.id);
-      await docRef.set({
-        name: user.name,
-        email: user.email
-      });
-  }
+    async update(user: User) {
+        await this.collection.doc(user.id).set(user);
+    }
 
-  async deleteUser(userId: string): Promise<void> {
-    await getFirestore().collection('users').doc(userId).delete();
-  }
+    async delete(id: string) {
+        await this.collection.doc(id).delete();
+    }
 }

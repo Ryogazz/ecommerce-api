@@ -1,46 +1,34 @@
-import { CollectionReference, getFirestore } from 'firebase-admin/firestore';
-import { Company } from '../models/company.model.js';
+import { CollectionReference, getFirestore } from "firebase-admin/firestore";
+import { Company, companyConverter } from "../models/company.model.js";
 
 export class CompanyRepository {
 
-  private collection: CollectionReference;
+    private collection: CollectionReference<Company>;
 
-  constructor() {
-    this.collection = getFirestore().collection('companies');
-  }
-  async getAll(): Promise<Company[]> {
-    const snapshot = await  this.collection.get();
-    const company = snapshot.docs.map(doc => {
-      return {
-        id: doc.id,
-        ...doc.data()
-      }
+    constructor() {
+        this.collection = getFirestore()
+            .collection("companies")
+            .withConverter(companyConverter);
     }
-    ) as Company[];
-    return company;
-  }
 
-  async getById(id: string): Promise<Company | null> {
-    const doc = await this.collection.doc(id).get();
-    if (doc.exists) {
-      return {
-        id: doc.id,
-        ...doc.data()
-      } as Company;
+    async getAll(): Promise<Company[]> {
+        const snapshot = await this.collection.get();
+        return snapshot.docs.map(doc => doc.data());
     }
-    else {
-      return null;
+
+    async getById(id: string): Promise<Company | null> {
+        const doc = await this.collection.doc(id).get();
+        return doc.data() ?? null;
     }
-  }
 
-  async create(company: Company): Promise<void> {
-    await this.collection.add(company);
-  }
+    async create(company: Company) {
+        await this.collection.add(company);
+    }
 
-  async update(company: Company) {
-    const docRef = this.collection.doc(company.id!);
-      delete company.id; 
-      await docRef.set(company);
-  }
+    async update(company: Company) {
+        await this.collection
+            .doc(company.id)
+            .set(company);
+    }
 
 }

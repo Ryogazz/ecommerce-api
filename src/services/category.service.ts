@@ -27,7 +27,7 @@ export class CategoryService {
   }
 
   async create(category: Category): Promise<void> {
-    await this.categoryRepository.create(category);
+    await this.categoryRepository.save(category);
   }
 
   async update(id: string, category: Category): Promise<void> {
