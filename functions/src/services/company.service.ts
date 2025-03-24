@@ -41,15 +41,15 @@ export class CompanyService {
       _company.logomarca = await this.uploadFileService.upload(company.logomarca);
   }
 
-      _company.logomarca = company.logomarca,
-      _company.cpfCnpj = company.cpfCnpj,
-      _company.razaoSocial = company.razaoSocial,
-      _company.nomeFantasia = company.nomeFantasia,
-      _company.telefone = company.telefone,
-      _company.horarioFuncionamento = company.horarioFuncionamento,
-      _company.endereco = company.endereco,
-      _company.localizacao = company.localizacao,
-      _company.taxaEntrega = company.taxaEntrega,
+      _company.logomarca = company.logomarca;
+      _company.cpfCnpj = company.cpfCnpj;
+      _company.razaoSocial = company.razaoSocial;
+      _company.nomeFantasia = company.nomeFantasia;
+      _company.telefone = company.telefone;
+      _company.horarioFuncionamento = company.horarioFuncionamento;
+      _company.endereco = company.endereco;
+      _company.localizacao = company.localizacao;
+      _company.taxaEntrega = company.taxaEntrega;
       _company.ativa = company.ativa
 
 

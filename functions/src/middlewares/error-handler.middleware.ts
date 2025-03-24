@@ -5,6 +5,7 @@ import { ErrorBase } from '../errors/base.error.js';
 
 export const errorHandler = (app: express.Express) => {
   app.use(errors());
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   app.use((erro: Error, req: Request, res: Response, next: NextFunction) => {
     if (erro instanceof ErrorBase) {
        erro.send(res);

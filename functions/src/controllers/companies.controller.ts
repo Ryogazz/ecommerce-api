@@ -15,7 +15,7 @@ export class CompaniesController {
   }
 
   static async create(req: Request, res: Response) {
-    let company = req.body;
+    const company = req.body;
     await new CompanyService().create(company);
     res.status(201).send({ message: "Empresa criada com sucesso!" });
 

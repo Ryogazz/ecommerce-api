@@ -6,6 +6,7 @@ import { UserService } from '../services/user.service.js';
 
 export class UsersController {
   static async getAllUsers(req: Request, res: Response) {
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     req.user
     res.send(await new UserService().getAllUsers());
   }
@@ -16,7 +17,7 @@ export class UsersController {
   }
 
   static async createUser(req: Request, res: Response) {
-    let user = req.body;
+    const user = req.body;
     await new UserService().createUser(user);
     res.status(201).send({ message: "Usuário criado com sucesso!" });
 

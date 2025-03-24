@@ -13,7 +13,7 @@ export class CategoryController {
   }
 
   static async create(req: Request, res: Response) {
-    let category = req.body;
+    const category = req.body;
     await new CategoryService().create(category);
     res.status(201).send({ message: "Categoria criada com sucesso!" });
   }
